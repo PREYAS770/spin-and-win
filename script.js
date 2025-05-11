@@ -1,33 +1,31 @@
+const wheel = document.getElementById('wheel');
+const spinBtn = document.getElementById('spin');
+const popup = document.getElementById('popup');
+const prizeText = document.getElementById('prizeText');
+const closeBtn = document.getElementById('close');
 
-const prizes = ["₹10", "₹20", "₹50", "₹100", "Try Again", "₹0"];
-const canvas = document.getElementById('wheel');
-const ctx = canvas.getContext('2d');
-const spinBtn = document.getElementById('spinBtn');
-const resultText = document.getElementById('resultText');
+const prizes = [
+  "₹50 Voucher",
+  "Try Again",
+  "₹20 Cashback",
+  "Better Luck Next Time",
+  "₹10 Discount",
+  "Free Spin"
+];
 
-function drawWheel() {
-  const angle = (2 * Math.PI) / prizes.length;
-  prizes.forEach((prize, index) => {
-    const startAngle = index * angle;
-    const endAngle = startAngle + angle;
-    ctx.beginPath();
-    ctx.moveTo(150, 150);
-    ctx.arc(150, 150, 150, startAngle, endAngle);
-    ctx.fillStyle = `hsl(${index * 60}, 80%, 60%)`;
-    ctx.fill();
-    ctx.fillStyle = "#000";
-    ctx.font = "16px Arial";
-    ctx.textAlign = "center";
-    ctx.translate(150, 150);
-    ctx.rotate(startAngle + angle / 2);
-    ctx.fillText(prize, 100, 10);
-    ctx.rotate(-(startAngle + angle / 2));
-    ctx.translate(-150, -150);
-  });
-}
-drawWheel();
+spinBtn.addEventListener('click', () => {
+  const rand = Math.floor(Math.random() * 360) + 720; // Rotate 2–3 times
+  wheel.style.transform = `rotate(${rand}deg)`;
 
-spinBtn.addEventListener("click", () => {
-  const result = prizes[Math.floor(Math.random() * prizes.length)];
-  resultText.textContent = "You got: " + result;
+  const resultIndex = Math.floor(Math.random() * prizes.length);
+  const selectedPrize = prizes[resultIndex];
+
+  setTimeout(() => {
+    prizeText.innerText = `🎉 You won: ${selectedPrize}`;
+    popup.classList.remove('hidden');
+  }, 4000);
+});
+
+closeBtn.addEventListener('click', () => {
+  popup.classList.add('hidden');
 });
