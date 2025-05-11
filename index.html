@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin & Win</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Spin & Win 🎉</h1>
+    <canvas id="wheel" width="300" height="300"></canvas>
+    <button id="spinBtn">Spin</button>
+    <p id="resultText"></p>
+    <div class="adsense-placeholder">[ Google AdSense Banner Here ]</div>
+  </div>
+  <script src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
