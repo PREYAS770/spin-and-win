@@ -1,74 +1,148 @@
+# Re-create the ZIP file after code execution environment reset
+from zipfile import ZipFile
+
+html_code = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button with Spinner and Ads</title>
-    <style>
-        /* Basic Styles */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            flex-direction: column;
-        }
-        
-        /* Spinner Styles */
-        #spinner {
-            display: none;
-            border: 4px solid #f3f3f3; /* Light grey */
-            border-top: 4px solid #3498db; /* Blue */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎯 Spin & Win - Gift Cards</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f0f0f0;
+    }
 
-        /* Ads Section Styles */
-        #ads {
-            display: none;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f4f4f4;
-            border: 1px solid #ddd;
-        }
+    h1 {
+      margin-top: 30px;
+      color: #333;
+    }
 
-        /* Animation for spinner */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+    .wheel-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 30px auto;
+    }
+
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 10px solid #444;
+      background: conic-gradient(
+        #f44336 0% 20%,
+        #4caf50 20% 40%,
+        #2196f3 40% 60%,
+        #ffeb3b 60% 80%,
+        #9c27b0 80% 100%
+      );
+      transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .pointer {
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-bottom: 30px solid #ff5722;
+      position: absolute;
+      top: -30px;
+      left: calc(50% - 20px);
+    }
+
+    #spinBtn, #claimBtn {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 15px;
+    }
+
+    #spinBtn {
+      background-color: #007bff;
+      color: white;
+    }
+
+    #claimBtn {
+      background-color: #28a745;
+      color: white;
+      display: none;
+    }
+
+    #result {
+      font-size: 18px;
+      margin-top: 10px;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-    <button id="loadButton">Load Data</button>
-    <div id="spinner"></div>
-    <div id="ads">
-        <h3>Ad: Great Deal on Shoes!</h3>
-        <p>Buy 1 get 1 free! Hurry up!</p>
-    </div>
 
-    <script>
-        const loadButton = document.getElementById('loadButton');
-        const spinner = document.getElementById('spinner');
-        const ads = document.getElementById('ads');
+  <h1>🎁 Spin & Win Gift Cards</h1>
+  <div class="wheel-container">
+    <div class="pointer"></div>
+    <div class="wheel" id="wheel"></div>
+  </div>
+  <button id="spinBtn">Spin</button>
+  <button id="claimBtn">Claim Prize</button>
+  <div id="result"></div>
 
-        loadButton.addEventListener('click', () => {
-            // Show spinner and ads
-            spinner.style.display = 'block';
-            ads.style.display = 'block';
+  <!-- PropellerAds Popup Script -->
+  <script type="text/javascript">
+    var atOptions = {
+      'key' : '5983150',
+      'format' : 'popunder',
+      'popup' : true,
+      'async' : true,
+      'delay' : 0,
+    };
+    document.write('<script src="https://loohaiturigavik.net/afu.php?zoneid=5983150"><\\/script>');
+  </script>
 
-            // Simulate a loading process (e.g., fetching data)
-            setTimeout(() => {
-                // Hide spinner and ads after 3 seconds
-                spinner.style.display = 'none';
-                ads.style.display = 'none';
-                alert('Data loaded successfully!');
-            }, 3000);
-        });
-    </script>
+  <script>
+    const wheel = document.getElementById('wheel');
+    const spinBtn = document.getElementById('spinBtn');
+    const claimBtn = document.getElementById('claimBtn');
+    const result = document.getElementById('result');
+
+    const prizes = ["₹50 Gift Card", "₹100 Voucher", "Try Again", "₹200 Bonus", "Free Spin"];
+
+    let isSpinning = false;
+
+    spinBtn.addEventListener('click', () => {
+      if (isSpinning) return;
+      isSpinning = true;
+
+      const randDeg = 3600 + Math.floor(Math.random() * 720);
+      wheel.style.transform = `rotate(${randDeg}deg)`;
+
+      const normalizedDeg = randDeg % 360;
+      const prizeIndex = Math.floor((normalizedDeg / 72)) % prizes.length;
+
+      setTimeout(() => {
+        result.textContent = `🎉 You won: ${prizes[prizeIndex]}!`;
+        claimBtn.style.display = "inline-block";
+        isSpinning = false;
+      }, 5200);
+    });
+
+    claimBtn.addEventListener('click', () => {
+      setTimeout(() => {
+        window.location.href = "https://wa.me/?text=🎁 I just won a gift card! Try your luck here: https://preyas770.github.io/spin-and-win/";
+      }, 500);
+    });
+  </script>
 </body>
 </html>
+"""
+
+zip_path = "/mnt/data/spin_and_win_fixed.zip"
+with ZipFile(zip_path, 'w') as zipf:
+    zipf.writestr("index.html", html_code)
+
+zip_path
