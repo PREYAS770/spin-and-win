@@ -2,110 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Spin & Win - Gift Card Edition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin & Win - Lucky Draw</title>
   <style>
     body {
       margin: 0;
-      font-family: sans-serif;
-      background: #f0f8ff;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
+      justify-content: flex-start;
+      padding: 20px;
     }
 
-    .spinner {
-      width: 300px;
-      height: 300px;
-      border-radius: 50%;
-      border: 10px solid #eee;
+    .container {
+      max-width: 500px;
+      width: 100%;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
       position: relative;
-      overflow: hidden;
-      margin: 20px 0;
     }
 
-    .spinner .sector {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      background: #ffcc00;
-      transform-origin: 100% 100%;
+    h1 {
+      color: #333;
     }
 
-    .button {
-      background: #28a745;
+    p {
+      color: #555;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #ff5722;
       color: white;
-      padding: 15px 30px;
+      padding: 12px 24px;
+      font-size: 18px;
       border: none;
       border-radius: 8px;
-      font-size: 18px;
       cursor: pointer;
-      margin-top: 20px;
+      margin: 20px 0;
+      transition: background-color 0.3s ease;
     }
 
-    #prizeDisplay {
+    .btn:hover {
+      background-color: #e64a19;
+    }
+
+    .ad-banner {
       margin-top: 20px;
-      font-size: 20px;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <h1>Welcome to Spin & Win</h1>
+    <p>Try your luck and win exciting gift cards! Before you spin, please support us by watching a quick ad.</p>
 
-  <h1>🎁 Spin & Win a Gift Card!</h1>
+    <button class="btn" onclick="redirectToAd()">Watch Now</button>
 
-  <div class="spinner" id="wheel">
-    <!-- You can add sector visuals here -->
-    <img src="https://cdn.pixabay.com/photo/2021/10/14/08/46/spinner-6707882_960_720.png" alt="spinner" width="100%" />
+    <p>After watching, come back to spin the wheel and claim your gift card. Good luck!</p>
+
+    <!-- Adsterra Banner Ad -->
+    <div class="ad-banner">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : '40d23b1a0f7220cc145d4e6c6a75463a',
+          'format' : 'banner',
+          'height' : 90,
+          'width' : 728,
+          'params' : {}
+        };
+        document.write('<scr' + 'ipt type="text/javascript" src="//www.profitableratecpm.com/e4txuiy3a/invoke.js"></scr' + 'ipt>');
+      </script>
+    </div>
   </div>
 
-  <button class="button" onclick="spinWheel()">Spin</button>
-
-  <div id="prizeDisplay"></div>
-
-  <button class="button" id="claimBtn" onclick="claimPrize()" style="display: none;">Claim Prize</button>
-
   <script>
-    const prizes = [
-      "₹50 Gift Card",
-      "₹100 Gift Card",
-      "Try Again",
-      "₹20 PayTM Cash",
-      "Better Luck Next Time",
-      "Amazon ₹200"
-    ];
-
-    let spinning = false;
-
-    function spinWheel() {
-      if (spinning) return;
-
-      spinning = true;
-      const wheel = document.getElementById('wheel');
-      const prizeDisplay = document.getElementById('prizeDisplay');
-      const claimBtn = document.getElementById('claimBtn');
-
-      let rotateDeg = 3600 + Math.floor(Math.random() * 360); // 10 rounds + random
-      wheel.style.transition = "transform 4s ease-out";
-      wheel.style.transform = `rotate(${rotateDeg}deg)`;
-
-      const index = Math.floor(Math.random() * prizes.length);
-      const prize = prizes[index];
-
-      setTimeout(() => {
-        prizeDisplay.innerText = `🎉 You won: ${prize}`;
-        claimBtn.style.display = 'inline-block';
-        spinning = false;
-      }, 4000);
-    }
-
-    function claimPrize() {
-      // Open Adsterra ad in a new tab
+    function redirectToAd() {
       window.open("https://www.profitableratecpm.com/e4txuiy3a?key=40d23b1a0f7220cc145d4e6c6a75463a", "_blank");
     }
   </script>
-
 </body>
 </html>
