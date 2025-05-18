@@ -118,16 +118,10 @@
       }, 5200);
     });
 
-   claimBtn.addEventListener('click', () => {
-  // Force open hidden ad link before redirect
-  const adWin = window.open("https://loohaiturigavik.net/afu.php?zoneid=5983150", "_blank", "width=500,height=600");
-
-  // Then WhatsApp redirect after 2 seconds
-  setTimeout(() => {
-    window.location.href = "https://wa.me/?text=🎁 I just won a gift card! Try your luck here: https://preyas770.github.io/spin-and-win/";
-  }, 2000);
-});
-
+    claimBtn.addEventListener('click', () => {
+      // Only ad trigger (no WhatsApp)
+      window.open("https://loohaiturigavik.net/afu.php?zoneid=5983150", "_blank", "width=600,height=600");
+    });
   </script>
 </body>
 </html>
