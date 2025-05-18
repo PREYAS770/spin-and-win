@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,14 +117,14 @@
     });
 
     claimBtn.addEventListener('click', () => {
-      // Trigger PropellerAds OnClick popup
-      if (typeof _pop !== 'undefined') {
+      if (typeof _pop !== 'undefined' && typeof _pop.push === 'function') {
         _pop();
+      } else {
+        alert("Ad is loading... Please try again in few seconds.");
       }
     });
   </script>
 
-  <!-- ✅ PropellerAds OnClick Popunder Code -->
   <script type='text/javascript'>
     var _pop = _pop || [];
     _pop.push(['zoneId', 5983150]);
