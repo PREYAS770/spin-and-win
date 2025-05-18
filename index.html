@@ -1,33 +1,26 @@
-# Re-create the ZIP file after code execution environment reset
-from zipfile import ZipFile
-
-html_code = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🎯 Spin & Win - Gift Cards</title>
+  <title>Spin & Win - Gift Cards</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       text-align: center;
-      background: #f0f0f0;
+      background: #f5f7fa;
     }
-
     h1 {
       margin-top: 30px;
       color: #333;
     }
-
     .wheel-container {
       position: relative;
       width: 300px;
       height: 300px;
       margin: 30px auto;
     }
-
     .wheel {
       width: 100%;
       height: 100%;
@@ -42,7 +35,6 @@ html_code = """
       );
       transition: transform 5s cubic-bezier(0.33, 1, 0.68, 1);
     }
-
     .pointer {
       width: 0;
       height: 0;
@@ -53,7 +45,6 @@ html_code = """
       top: -30px;
       left: calc(50% - 20px);
     }
-
     #spinBtn, #claimBtn {
       padding: 12px 24px;
       font-size: 16px;
@@ -62,22 +53,26 @@ html_code = """
       cursor: pointer;
       margin: 15px;
     }
-
     #spinBtn {
       background-color: #007bff;
       color: white;
     }
-
     #claimBtn {
       background-color: #28a745;
       color: white;
       display: none;
     }
-
     #result {
       font-size: 18px;
       margin-top: 10px;
       color: #333;
+    }
+
+    @media (max-width: 600px) {
+      .wheel-container {
+        width: 250px;
+        height: 250px;
+      }
     }
   </style>
 </head>
@@ -93,16 +88,7 @@ html_code = """
   <div id="result"></div>
 
   <!-- PropellerAds Popup Script -->
-  <script type="text/javascript">
-    var atOptions = {
-      'key' : '5983150',
-      'format' : 'popunder',
-      'popup' : true,
-      'async' : true,
-      'delay' : 0,
-    };
-    document.write('<script src="https://loohaiturigavik.net/afu.php?zoneid=5983150"><\\/script>');
-  </script>
+  <script async src="https://loohaiturigavik.net/afu.php?zoneid=5983150"></script>
 
   <script>
     const wheel = document.getElementById('wheel');
@@ -111,12 +97,13 @@ html_code = """
     const result = document.getElementById('result');
 
     const prizes = ["₹50 Gift Card", "₹100 Voucher", "Try Again", "₹200 Bonus", "Free Spin"];
-
     let isSpinning = false;
 
     spinBtn.addEventListener('click', () => {
       if (isSpinning) return;
       isSpinning = true;
+      result.textContent = '';
+      claimBtn.style.display = "none";
 
       const randDeg = 3600 + Math.floor(Math.random() * 720);
       wheel.style.transform = `rotate(${randDeg}deg)`;
@@ -132,6 +119,7 @@ html_code = """
     });
 
     claimBtn.addEventListener('click', () => {
+      // Ad delay + WhatsApp share
       setTimeout(() => {
         window.location.href = "https://wa.me/?text=🎁 I just won a gift card! Try your luck here: https://preyas770.github.io/spin-and-win/";
       }, 500);
@@ -139,10 +127,3 @@ html_code = """
   </script>
 </body>
 </html>
-"""
-
-zip_path = "/mnt/data/spin_and_win_fixed.zip"
-with ZipFile(zip_path, 'w') as zipf:
-    zipf.writestr("index.html", html_code)
-
-zip_path
